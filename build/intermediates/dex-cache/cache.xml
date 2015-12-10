@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-f70008a2cf143320c2f7bcdaeea3a6c1a28c8efb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.0-5f25b6c28950352d89be43c0d356019b7295c5f0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-da9093aac12e6c0451371f258e89aa46940cb1f5.jar" />
+    </item>
+    <item
+        jar="C:\Users\Derek\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.0\support-annotations-23.0.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.0-c48f3a40a8ca4d91ba8a4ae0ebb38f685a93aeec.jar" />
+    </item>
+
+</items>
