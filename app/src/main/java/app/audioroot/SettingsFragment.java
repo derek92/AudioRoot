@@ -155,7 +155,7 @@ public class SettingsFragment extends Fragment {
         volume = (SeekBar) getActivity().findViewById(R.id.seekBar2);
 
         volume.setMax(AM.getStreamMaxVolume(inStream.get(inputName))); //volumebar correspond to mediavolume
-        volume.setProgress(1);
+       // volume.setProgress(1);
         volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -176,7 +176,7 @@ public class SettingsFragment extends Fragment {
                         }
 
                         AM.setStreamVolume(
-                                inStream.get(inputName),
+                                AudioManager.STREAM_MUSIC,
                                 progress,
                                 AudioManager.FLAG_PLAY_SOUND); //new volume from selected
                     }

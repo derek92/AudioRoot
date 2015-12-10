@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        active = AudioManager.STREAM_MUSIC; //default before user picks setting
+        active = AudioManager.STREAM_RING; //default before user picks setting
 
         setContentView(R.layout.indivport);
         music = (RadioButton) findViewById(R.id.Music);
