@@ -2,32 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.0"
-        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
-        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-f70008a2cf143320c2f7bcdaeea3a6c1a28c8efb.jar" />
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-c230cbc711e1876646d6d1777a381ce4e44887ee.jar" />
     </item>
     <item
-        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.0"
-        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
-        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.0-5f25b6c28950352d89be43c0d356019b7295c5f0.jar" />
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-c734619303752eff719907ff3477857a7d2b7762.jar" />
     </item>
     <item
-        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\classes.jar"
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.0"
-        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
-        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-da9093aac12e6c0451371f258e89aa46940cb1f5.jar" />
+        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-180b6b675cd499a4d97c8f1cf52f7530c0c28914.jar" />
     </item>
     <item
-        jar="C:\Users\Derek\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.0\support-annotations-23.0.0.jar"
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="23.0.0"
-        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
-        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.0-c48f3a40a8ca4d91ba8a4ae0ebb38f685a93aeec.jar" />
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-305af055d0074e54e42551a596640aa089e5fbd5.jar" />
+    </item>
+    <item
+        jar="C:\Users\Derek\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-64396f24d5c75beb78427319d9ff6bcf8f42b2a1.jar" />
+    </item>
+    <item
+        jar="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
+        <dex dex="C:\Users\Derek\Desktop\CS371M\AudioRoot\app\build\intermediates\pre-dexed\debug\classes-a89a4efada6010dae97ec84b10c763bc5e9baa36.jar" />
     </item>
 
 </items>

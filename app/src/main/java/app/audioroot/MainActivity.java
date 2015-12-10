@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.SettingsFragListen, MusicSettingFragment.MSListen, MusicListFragment.MusicListen, InputListFragment.InputListen{
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     boolean killed = false;
     int[] songs = getSongPaths();
     int ind = 0;
-    String[] musicList = {"Homos In Space", "No Photograph", "C thing"};
+    String[] musicList = {"Homos In Space", "No Photograph", "Prelude in C Major"};
 
     int active;
 
@@ -47,12 +48,10 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         BT;
       */
     updateSong timer;
-    public static HashMap<String, Integer> streams;
     int songspot;
     MediaPlayer mp;
     AudioManager AM;
     SwipeDetector swipeDetector ;
-    DynamicAdapter outputs;
     RadioButton list;
     RadioButton music;
     RadioButton player;
@@ -97,25 +96,13 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        active = AudioManager.STREAM_RING; //default before user picks setting
+        active = AudioManager.STREAM_MUSIC; //default before user picks setting
 
-        if (getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.combined_land);
-            music = null;
-            list = null;
-            removeOPFrag();
-        } else {
-            setContentView(R.layout.indivport);
-            music = (RadioButton) findViewById(R.id.Music);
-            list = (RadioButton) findViewById(R.id.Output);
-            ILF = new InputListFragment(false, active);
-            setOPFrag();
-        }
-
-
-
-
+        setContentView(R.layout.indivport);
+        music = (RadioButton) findViewById(R.id.Music);
+        list = (RadioButton) findViewById(R.id.Output);
+        ILF = new InputListFragment(false, active);
+        setOPFrag();
 
         songspot = 0;
         swipeDetector = new SwipeDetector();
@@ -123,17 +110,13 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         mp = new MediaPlayer();//initialize
         mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onPrepared(MediaPlayer mp) {
-
-                mp.seekTo(songspot);
-                //  Toast.makeText(MainActivity.this, Integer.toString(songspot), Toast.LENGTH_SHORT).show();
+            public void onPrepared(MediaPlayer mp) {  //mediaplayer prepared to play
                 if (!mp.isPlaying()) {
-                    mp.start();
-                    setInfo();
+                    playSong();
                 }
             }
         });
-        AM = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        AM = (AudioManager) getSystemService(Context.AUDIO_SERVICE); //set our audiomanager for outputs
 
         //mediaplayer progressbuttons
         //progbar and times
@@ -177,29 +160,26 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
                     FragmentTransaction ft = f.beginTransaction();
                     if (MS == null) //not added
                     {
-                      //  Toast.makeText(MainActivity.this, "no fragment! DRAWER", Toast.LENGTH_LONG).show();
-                        //break;
-                    } else {
+                    } else { //remove, button doesnt work right
                         ft.remove(MS);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                         ft.commit();
                     }
                 }
-                else
+                else   //open! and dont overlap and use up memory
                 {
-                   // Toast.makeText(MainActivity.this, "openDRAWER", Toast.LENGTH_LONG).show();
 
                     MusicSettingFragment MS =  (MusicSettingFragment) f.findFragmentByTag("MS");
                     FragmentTransaction ft = f.beginTransaction();
                     if(MS == null)
                     {
-                        MS = new MusicSettingFragment(musicList[ind], mp.isPlaying());
+                        MS = new MusicSettingFragment(musicList[ind], mp.isPlaying());  //player initialization
                         ft.add(R.id.frameside, MS, "MS").commit();
 
                     }
                     else
                     {
-                        MS.setSong(musicList[ind], mp.isPlaying());
+                        MS.setSong(musicList[ind], mp.isPlaying()); //update the song title in window
                         ft.replace(R.id.frameside, MS, "MS").commit();
                     }
                     player.setChecked(false);
@@ -210,8 +190,26 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
 
     }
 
-    public void playSong(int index)
+    public void playSong()
     {
+        try {
+
+            if(songspot > 0)
+                mp.seekTo(songspot);
+            mp.start();
+            setInfo();
+        }catch(Exception e)
+        {
+            e.getStackTrace();
+        }
+    }
+
+
+    //MusicListen
+    public void play(int ind, int place) {
+        songspot = place;
+        this.ind = ind; //set index bc chosen song in fragment list is a new song.
+
 
         if(timer != null)
             timer.kill(); //stop checking time, new song needed
@@ -220,58 +218,48 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             if(mp.isPlaying())
                 mp.stop(); //stop music
 
-            mp.reset();
+            mp.reset(); //good measure
         }
 
-        try {
-            mp.setAudioStreamType(active);
-            String x = "android.resource://" + getPackageName() + "/" + songs[ind];
-            Log.d("PACKAGENAME", getPackageName());
-            mp.setDataSource(getApplicationContext(),
-                    Uri.parse(x));
-            mp.prepareAsync();
-        }catch(Exception e)
-        {
-            Log.d("ERROR", "shit1");
-            e.getStackTrace();
-        }
-    }
+        String x = "android.resource://" + getPackageName() + "/" + songs[ind];
+      try {
+          mp.setDataSource(getApplicationContext(),
+                  Uri.parse(x)); //song
 
-
-    //MusicListen
-    public void play(int ind)
-    {
-        songspot = 0;
-        this.ind = ind; //set index bc chosen song in frag
-        playSong(ind);
+          mp.prepareAsync();
+      }
+      catch (Exception e)
+      {
+          e.getStackTrace();
+      }
     }
 
     //MsListen
     @Override
    public void musicFunction(String action)
-    {
+    {   //buttons
         if(action.compareTo("back") == 0)
         {
-            songspot = 0;
             ind = (ind - 1 == -1) ? songs.length - 1 : ind - 1;
-            playSong(ind);
+            play(ind, 0);
         }
         if(action.compareTo("forward") == 0)
         {
-            songspot = 0;
             ind = (ind + 1 == songs.length) ? 0 : ind + 1;
-            playSong(ind);
+            play(ind,0);
         }
         if(action.compareTo("play") == 0)
         {
             if(mp.isPlaying())
+            {
                 mp.pause();
+            }
             else
                 mp.start();
         }
 }
 
-    public void setInfo() {
+    public void setInfo() {  //set ingo for songs on the fragment player
 
         MusicSettingFragment MS =  (MusicSettingFragment) f.findFragmentByTag("MS");
         if(MS != null) {
@@ -295,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         String title = data.getString("name");
         boolean on = data.getBoolean("on");
 
-        maintainAudio(data.getInt("audio"));
+        maintainAudio(data.getInt("audio"), on);
     }
 
     public void closeFrag()
@@ -304,22 +292,19 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         ILF.updatefrag(this.frag);
     }
 
-    public void maintainAudio(int streamtype) {
-       // mp.pause();
-        int equiv = streamtype;
+    public void maintainAudio(int streamtype, boolean on) {
+        int equiv = streamtype; //the chosen audio by the user from the list
         switch(streamtype)
         {
-
-            case  AudioManager.STREAM_MUSIC:
-
+            case  AudioManager.STREAM_MUSIC: // only plays in headset
                 if(!AM.isWiredHeadsetOn()) {
                     equiv = AudioManager.STREAM_RING;
                     Toast.makeText(this, "Headset not plugged in, playing from Speakerphone", Toast.LENGTH_LONG).show();
                 }
-                break; // only plays in headset
+                break;
 
-            case  AudioManager.STREAM_RING:
-                break; // plays in headset + speaker
+            case  AudioManager.STREAM_RING:  // plays in headset + speaker
+                break;
 
             case  AudioManager.STREAM_VOICE_CALL: //earpiece
                 break;
@@ -328,18 +313,19 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
                 break;
         }
 
-        active = equiv;
+         active = (on)? equiv :  AudioManager.STREAM_MUSIC;
         ILF.updateact(active);
 
-        if(mp.isPlaying()) {
+        if(mp.isPlaying()) { //if the music is playing, keep the position, switch output, continue song
             songspot = mp.getCurrentPosition();
-            //mp.pause();
-            playSong(ind);
+            mp.pause();
+            mp.setAudioStreamType(active);  //correct output speaker
+            play(ind, mp.getCurrentPosition());
         }
     }
 
 
-    public void setButtonsSwitch()
+    public void setButtonsSwitch()   //switch between a list of music and a list of outputs
     {
         View.OnClickListener fragSwitch = new View.OnClickListener() {
             @Override
@@ -361,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         music.setOnClickListener(fragSwitch);
     }
 
-    public void removeMusicFrag()
+    public void removeMusicFrag()  //remove music list
     {
         FragmentManager fragman = getFragmentManager();
         FragmentTransaction ft = fragman.beginTransaction();
@@ -369,21 +355,20 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
 
         if (MLF == null) //not added
         {
-            //Toast.makeText(this, "no fragment mlf!", Toast.LENGTH_LONG).show();
-            //break;
+
         } else {
             ft.remove(MLF);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            //ragListen.closeFrag();
+
             ft.commit();
         }
     }
 
 
 
-    public void setOPFrag() {
+    public void setOPFrag() {  //set output fragment list
         removeMusicFrag();
-        //music fragment overlay;
+
         ILF  = new InputListFragment(frag, active);
         FragmentManager fragman = getFragmentManager();
         FragmentTransaction ft = fragman.beginTransaction();
@@ -395,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     }
 
 
-    public void removeOPFrag()
+    public void removeOPFrag()  //remove output list to make room
     {
         FragmentManager fragman = getFragmentManager();
         FragmentTransaction ft = fragman.beginTransaction();
@@ -411,17 +396,11 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             ft.commit();
         }
     }
-    public void setMusicFrag()
-    {
+    public void setMusicFrag() {  //display music
         removeOPFrag();
-        //music fragment overlay;
         MusicListFragment MLF = new MusicListFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-       // ft.setTransition(Frag)
         ft.replace(R.id.FL, MLF, "MLF").commit();
-        //frag = true;
-
-      //  Toast.makeText(this, "SETTING MUSIC FRAG", Toast.LENGTH_LONG).show();
     }
 
 

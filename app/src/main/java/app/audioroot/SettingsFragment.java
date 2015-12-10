@@ -126,16 +126,13 @@ public class SettingsFragment extends Fragment {
 
                 if (SF == null) //not added
                 {
-                   // Toast.makeText(getActivity(), "no fragment!", Toast.LENGTH_LONG).show();
-                    //break;
+
                 } else {
                     ft.remove(SF);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                     fragListen.closeFrag();
                     ft.commit();
                 }
-               // Toast.makeText(getActivity(), SF.title.getText().toString(), Toast.LENGTH_LONG).show();
-
             }
         });
 
@@ -158,9 +155,7 @@ public class SettingsFragment extends Fragment {
         volume = (SeekBar) getActivity().findViewById(R.id.seekBar2);
 
         volume.setMax(AM.getStreamMaxVolume(inStream.get(inputName))); //volumebar correspond to mediavolume
-
-        //volume.setProgress(AM.getStreamVolume(inStream.get(inputName))/volume.getMax());
-
+        volume.setProgress(1);
         volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -169,21 +164,21 @@ public class SettingsFragment extends Fragment {
                         double ratio = progress / (double)seekBar.getMax();
                         if(ratio <= .33)
                         {
-                            seekBar.setBackgroundColor(LOW);
+                            seekBar.setBackgroundColor(LOW); //low volume GREEN
                         }
                         else if(ratio > .33 && ratio <= .66)
                         {
-                            seekBar.setBackgroundColor(MED);
+                            seekBar.setBackgroundColor(MED); //MED Volume YELLOW
                         }
                         else if(ratio > .66)
                         {
-                            seekBar.setBackgroundColor(HI);
+                            seekBar.setBackgroundColor(HI);  //HI VOLUME RED
                         }
-                        Log.d("volume", "max: " + AM.getStreamMaxVolume(inStream.get(inputName)) + " prog: " + progress);
+
                         AM.setStreamVolume(
                                 inStream.get(inputName),
                                 progress,
-                                AudioManager.FLAG_PLAY_SOUND);
+                                AudioManager.FLAG_PLAY_SOUND); //new volume from selected
                     }
             }
 
@@ -200,7 +195,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void AUDIO_STUFF(String appName, boolean isChecked, int index) {
-        //activate
+        //activate, send to main for processing, new audio output chosen
         Bundle b = new Bundle();
         b.putBoolean("on", isChecked);
         b.putString("name", appName);

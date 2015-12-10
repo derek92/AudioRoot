@@ -42,8 +42,6 @@ public class InputListFragment extends Fragment{// implements SettingsFragment.S
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-
-
         //set things
     }
 
@@ -59,7 +57,7 @@ public class InputListFragment extends Fragment{// implements SettingsFragment.S
     public final static String EARPIECE = "Earpiece";
     public static final String EXTSPKR = "Ext. Speaker";
     public static final String HP = "Headphones";
-    public static  final String BT = "Bluetooth";
+
     ListView inputs;
     DynamicAdapter outputs;
     SwipeDetector swipeDetector;
@@ -80,10 +78,10 @@ public class InputListFragment extends Fragment{// implements SettingsFragment.S
         inputs = (ListView)getActivity().findViewById(R.id.listView3);
         outputs = new DynamicAdapter(getActivity().getApplicationContext());
         // inputs
-        outputs.addItem(new AppNode(EARPIECE));
+        outputs.addItem(new AppNode(EARPIECE));//create list entries
         outputs.addItem(new AppNode(EXTSPKR));
         outputs.addItem(new AppNode(HP));
-        outputs.addItem(new AppNode(BT));
+
         inputs.setAdapter(outputs);
 
         inputs.setOnTouchListener(swipeDetector);
@@ -95,14 +93,12 @@ public class InputListFragment extends Fragment{// implements SettingsFragment.S
                     if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
                         //quickswipe
                     }
-                    if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.LR) {  //kill the mediaplayer side fragment
                         FragmentManager fragman = getFragmentManager();
                         MusicSettingFragment MS = (MusicSettingFragment) fragman.findFragmentByTag("MS");
                         FragmentTransaction ft = fragman.beginTransaction();
                         if (MS == null) //not added
                         {
-                           // Toast.makeText(getActivity(), "no fragment! DRAWER", Toast.LENGTH_LONG).show();
-                            //break;
                         } else {
                             ft.remove(MS);
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -124,7 +120,6 @@ public class InputListFragment extends Fragment{// implements SettingsFragment.S
                         }
                     }
                 }) ;
-        //doublesided seekbar (2 audios, competing ratios of volume)
     }
 }
 

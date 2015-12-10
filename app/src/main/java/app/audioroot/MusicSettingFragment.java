@@ -37,7 +37,7 @@ public class MusicSettingFragment extends Fragment {
         this.song = s;
 
         TextView t = (TextView) getActivity().findViewById(R.id.textView);
-        if(isPlaying)
+        if(isPlaying) //current song
             t.setText(song);
     }
 

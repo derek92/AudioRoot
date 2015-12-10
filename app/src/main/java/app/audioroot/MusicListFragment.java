@@ -23,7 +23,7 @@ public class MusicListFragment extends Fragment {
 
 public interface MusicListen
 {
-    void play(int index);
+    void play(int index, int place);
 }
     MusicListen listener;
 
@@ -55,8 +55,8 @@ public interface MusicListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         songs = (ListView)view.findViewById(R.id.listView2);
-        String[] musicList = getResources().getStringArray(R.array.song_names);
-        Log.d("LIST", musicList[0]);
+        String[] musicList = getResources().getStringArray(R.array.song_names);  //songs!
+
         ArrayAdapter LA = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, musicList);
         songs.setAdapter(LA);
 
@@ -70,14 +70,12 @@ public interface MusicListen
                     if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
                         //quickswipe
                     }
-                    if (swipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    if (swipeDetector.getAction() == SwipeDetector.Action.LR) { // remove media player fragment
                         FragmentManager fragman = getFragmentManager();
                         MusicSettingFragment MS = (MusicSettingFragment) fragman.findFragmentByTag("MS");
                         FragmentTransaction ft = fragman.beginTransaction();
                         if (MS == null) //not added
                         {
-                           // Toast.makeText(getActivity(), "no fragment! DRAWER", Toast.LENGTH_LONG).show();
-                            //break;
                         } else {
                             ft.remove(MS);
                             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -87,7 +85,7 @@ public interface MusicListen
                     }
                 }
                 else{
-                    listener.play(i);
+                    listener.play(i,0); //play the selected song in the music list, send to main
                 }
             }
         }) ;
